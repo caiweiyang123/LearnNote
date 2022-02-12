@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Topic
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from .models import Topic
 from .forms import TopicForm
 
 
@@ -37,6 +37,9 @@ def new_topic(request):
         form = TopicForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('learning_logs:topics'))
-        context = {'form': form}
-        return render(request, 'learning_logs/new_topic.html', context)
+            return HttpResponseRedirect(reverse('learning_logs:topics/'))
+    context = {'form': form}
+    return render(request, 'learning_logs/new_topic.html', context)
+
+def new_entry(request,topic_id):
+    """在特定的主题中添加新条目"""
